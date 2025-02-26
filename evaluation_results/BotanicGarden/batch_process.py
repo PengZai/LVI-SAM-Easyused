@@ -7,7 +7,7 @@ import shutil
 
 
 
-sequence_name = '1005_07'
+sequence_name = '1018_00'
 sensor_type = 'lidar_inertial'
 filename_prefix = '_'.join(['lvisam', sensor_type,'for', sequence_name, 'img10hz600p'])
 
@@ -39,21 +39,21 @@ shutil.copy(os.path.join('../../config', 'BotanicGarden_lidar.yaml'), os.path.jo
 #     [0.0,0.0,0.0,1.0]
 # ])
 
-# keep same, it seems we don't need to transfer to VLP16 coordinates, which is more precise
-# sensor_coordinate_transform_matrix_for_camera_frame = np.array([
-#     [1.,0,0,0],  
-#     [0,1.,0,0],  
-#     [0,0,1.,0],  
-#     [0,0,0,1.0]
-# ])
+# keep same, pose of lio-sam is lidar frame
+sensor_coordinate_transform_matrix_for_camera_frame = np.array([
+    [1.,0,0,0],  
+    [0,1.,0,0],  
+    [0,0,1.,0],  
+    [0,0,0,1.0]
+])
 
 # VLP16 in Xsens coordinates
-sensor_coordinate_transform_matrix_for_camera_frame = np.array([
-    [0.999678872580465,0.0252865664429322,0.00150422292234868,0],  
-    [-0.0252723438960774,0.999649431893338,-0.0078025434141585,0],  
-    [-0.00170103929405540,0.00776298237926191,0.99996789371916,0],  
-    [0.0,0.0,0.0,1.0]
-])
+# sensor_coordinate_transform_matrix_for_camera_frame = np.array([
+#     [0.999678872580465,0.0252865664429322,0.00150422292234868,0],  
+#     [-0.0252723438960774,0.999649431893338,-0.0078025434141585,0],  
+#     [-0.00170103929405540,0.00776298237926191,0.99996789371916,0],  
+#     [0.0,0.0,0.0,1.0]
+# ])
 
 
 

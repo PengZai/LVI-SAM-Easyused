@@ -1,11 +1,13 @@
 APE w.r.t. translation part (m)
 (not aligned)
 
-       max	1.858114
-      mean	0.997033
-    median	1.123394
-       min	0.005912
-      rmse	1.134920
-       sse	678.799364
-       std	0.542189
+       max	5.089797
+      mean	2.648296
+    median	2.636736
+       min	0.005908
+      rmse	2.957803
+       sse	4610.511554
+       std	1.317241
 
+Plot saved to BotanicGarden/1005_07/lvisam_lidar_inertial_for_1005_07_img10hz600p/test_0/2d_ape_traj_raw
+Plot saved to BotanicGarden/1005_07/lvisam_lidar_inertial_for_1005_07_img10hz600p/test_0/2d_ape_traj_map
