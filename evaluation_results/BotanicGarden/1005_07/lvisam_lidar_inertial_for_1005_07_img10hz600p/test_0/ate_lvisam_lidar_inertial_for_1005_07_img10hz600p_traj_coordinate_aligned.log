@@ -1,0 +1,13 @@
+APE w.r.t. translation part (m)
+(with SE(3) Umeyama alignment)
+
+       max	0.718744
+      mean	0.335658
+    median	0.350586
+       min	0.012603
+      rmse	0.359337
+       sse	68.047801
+       std	0.128285
+
+Plot saved to BotanicGarden/1005_07/lvisam_lidar_inertial_for_1005_07_img10hz600p/test_0/2d_ate_traj_raw
+Plot saved to BotanicGarden/1005_07/lvisam_lidar_inertial_for_1005_07_img10hz600p/test_0/2d_ate_traj_map
