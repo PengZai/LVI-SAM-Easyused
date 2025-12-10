@@ -5,7 +5,7 @@ project_name: "lvi_sam"
 
 #common parameters
 imu_topic: "/ms/imu/data"
-image_topic: "/forwardLeft/image_raw"
+image_topic: "/forwardLeft/image_raw/compressed"
 point_cloud_topic: "/ouster/points"
 
 # Lidar Params
@@ -25,7 +25,7 @@ projection_parameters:
    mu: 1057.8085759554679
    mv: 1057.8344071878955
    u0: 1031.0394456453769
-   uv: 727.7604933179784
+   v0: 727.7604933179784
    k2: -0.03999018098363963
    k3: 0.0035531756082936186
    k4: -0.0006681279528559426
@@ -41,7 +41,7 @@ g_norm: 9.81007     # gravity magnitude
 
 
 # Extrinsic parameter between IMU and Camera. Tic
-estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
+estimate_extrinsic: 1   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
                         # 1  Have an initial guess about extrinsic parameters. We will optimize around your initial guess.
                         # 2  Don't know anything about extrinsic parameters. You don't need to give R,T. We will try to calibrate it. Do some rotation movement at beginning. 
 #Rotation from camera frame to imu frame, imu^R_cam

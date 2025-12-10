@@ -1,7 +1,8 @@
 #include "parameters.h"
 #include "keyframe.h"
 #include "loop_detection.h"
-
+#include <sensor_msgs/CompressedImage.h>
+#include <cv_bridge/cv_bridge.h>
 #define SKIP_FIRST_CNT 10
 
 queue<sensor_msgs::ImageConstPtr>      image_buf;
@@ -49,20 +50,41 @@ void new_sequence()
     m_buf.unlock();
 }
 
-void image_callback(const sensor_msgs::ImageConstPtr &image_msg)
+void image_callback(const sensor_msgs::CompressedImageConstPtr &compressed_msg)
 {
     if(!LOOP_CLOSURE)
         return;
-
+    
+    // Decompress the image
+    cv::Mat image;
+    try {
+        image = cv::imdecode(cv::Mat(compressed_msg->data), cv::IMREAD_COLOR);
+        if (image.empty()) {
+            ROS_ERROR("Failed to decode compressed image");
+            return;
+        }
+    } catch (cv::Exception& e) {
+        ROS_ERROR("cv::imdecode exception: %s", e.what());
+        return;
+    }
+    
+    // Convert to sensor_msgs::Image (so rest of your code still works)
+    sensor_msgs::ImagePtr image_msg = cv_bridge::CvImage(
+        compressed_msg->header, 
+        "bgr8",  // or "rgb8" depending on your camera
+        image
+    ).toImageMsg();
+    
     m_buf.lock();
     image_buf.push(image_msg);
     m_buf.unlock();
-
+    
     // detect unstable camera stream
     static double last_image_time = -1;
     if (last_image_time == -1)
         last_image_time = image_msg->header.stamp.toSec();
-    else if (image_msg->header.stamp.toSec() - last_image_time > 1.0 || image_msg->header.stamp.toSec() < last_image_time)
+    else if (image_msg->header.stamp.toSec() - last_image_time > 1.0 || 
+             image_msg->header.stamp.toSec() < last_image_time)
     {
         ROS_WARN("image discontinue! detect a new sequence!");
         new_sequence();

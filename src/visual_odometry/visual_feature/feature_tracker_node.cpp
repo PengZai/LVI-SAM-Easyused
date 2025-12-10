@@ -1,5 +1,6 @@
 #include "feature_tracker.h"
-
+#include <sensor_msgs/CompressedImage.h>
+#include <cv_bridge/cv_bridge.h>
 #define SHOW_UNDISTORTION 0
 
 
@@ -31,8 +32,32 @@ bool init_pub = 0;
 
 
 
-void img_callback(const sensor_msgs::ImageConstPtr &img_msg)
+#include <sensor_msgs/CompressedImage.h>
+#include <cv_bridge/cv_bridge.h>
+
+void img_callback(const sensor_msgs::CompressedImageConstPtr &compressed_msg)
 {
+    // Decompress the image first
+    cv::Mat decompressed_image;
+    try {
+        decompressed_image = cv::imdecode(cv::Mat(compressed_msg->data), cv::IMREAD_COLOR);
+        if (decompressed_image.empty()) {
+            ROS_ERROR("Failed to decode compressed image");
+            return;
+        }
+    } catch (cv::Exception& e) {
+        ROS_ERROR("cv::imdecode exception: %s", e.what());
+        return;
+    }
+    
+    // Convert to sensor_msgs::Image so rest of code works unchanged
+    sensor_msgs::ImagePtr img_msg = cv_bridge::CvImage(
+        compressed_msg->header,
+        decompressed_image.channels() == 1 ? "mono8" : "bgr8",
+        decompressed_image
+    ).toImageMsg();
+    
+    // Rest of your original code stays exactly the same
     double cur_img_time = img_msg->header.stamp.toSec();
 
     if(first_image_flag)
@@ -194,7 +219,7 @@ void img_callback(const sensor_msgs::ImageConstPtr &img_msg)
             for (int i = 0; i < NUM_OF_CAM; i++)
             {
                 cv::Mat tmp_img = stereo_img.rowRange(i * ROW, (i + 1) * ROW);
-                cv::cvtColor(show_img, tmp_img, CV_GRAY2RGB);
+                cv::cvtColor(show_img, tmp_img, cv::COLOR_GRAY2RGB);  // Fixed OpenCV 4 constant
 
                 for (unsigned int j = 0; j < trackerData[i].cur_pts.size(); j++)
                 {

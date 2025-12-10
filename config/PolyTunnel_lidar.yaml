@@ -23,7 +23,7 @@ lvi_sam:
 
   # Export settings
   saveTrajectory: true
-  saveTrajectoryResult: "/root/catkin_ws/src/LVI-SAM-Easyused/lvi_output/trajectory/traj.txt"
+  saveTrajectoryResult: "/lvi_output/traj.txt"
   savePCD: false                              # https://github.com/TixiaoShan/LIO-SAM/issues/3
   savePCDDirectory: "/lvi_output/map/"        # in your home folder, starts and ends with "/". Warning: the code deletes "LOAM" folder then recreates it. See "mapOptimization" for implementation
 
@@ -36,20 +36,25 @@ lvi_sam:
   lidarMaxRange: 1000.0                        # default: 1000.0, maximum lidar range to be used
  
   # IMU Settings
-  imuAccNoise: 0.01
-  imuGyrNoise: 0.002
-  imuAccBiasN: 0.00008
-  imuGyrBiasN: 0.00003
-  imuGravity: 9.81007
+  imuAccNoise: 0.001093618
+  imuGyrNoise: 0.00060369579 
+  imuAccBiasN: 4.584471e-05 
+  imuGyrBiasN: 3.22094e-06
+  imuGravity: 9.80511
   
   
   ###################### extrinsic between IMU and LiDAR  ###########################
   ###################### T_IMU_LiDAR, LiDAR -> IMU       ###########################
-  extrinsicTranslation: [0.0235636103, -0.0394981788,0.0266328686]    
+  extrinsicTrans: [ -0.0227289543, 0.0404418895, -0.0259327545 ]
+  extrinsicTranslation: [ -0.0227289543, 0.0404418895, -0.0259327545 ]
+  extrinsicRot: [ 0.9998459674, -0.0157202487, 0.007804818,
+                       0.0155436449, 0.9996328268, 0.0221947415,
+                       -0.0081508592, -0.0220700073, 0.9997232008]
+  
   extrinsicRotation: [ 0.9998459674, -0.0157202487, 0.007804818,
                        0.0155436449, 0.9996328268, 0.0221947415,
                        -0.0081508592, -0.0220700073, 0.9997232008]
-                       
+                         
   ########################## IMU property config  ###########################
   ## 对绝大多数IMU来说，下面三个值分别是"+z", "+y", "+x" (for most of IMUs, the following config is "+z", "+y", "+x")
   # 绕着哪个轴逆时针转动，输出yaw角度为正(which axis the IMU rotates around counterclockwise to get a positive yaw angle)
@@ -80,7 +85,7 @@ lvi_sam:
   mappingProcessInterval: 0.15                  # seconds, regulate mapping frequency
 
   # Surrounding map
-  surroundingkeyframeAddingDistThreshold: 1.0   # meters, regulate keyframe adding threshold
+  surroundingkeyframeAddingDistThreshold: 0.5   # meters, regulate keyframe adding threshold
   surroundingkeyframeAddingAngleThreshold: 0.2  # radians, regulate keyframe adding threshold
   surroundingKeyframeDensity: 2.0               # meters, downsample surrounding keyframe poses   
   surroundingKeyframeSearchRadius: 50.0         # meters, within n meters scan-to-map optimization (when loop closure disabled)

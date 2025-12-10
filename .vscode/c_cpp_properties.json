@@ -1,0 +1,37 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/shuoyuan/catkin_dataset_ws/devel/include/**",
+        "/home/shuoyuan/catkin_driver_ws/devel/include/**",
+        "/home/shuoyuan/catkin_slam_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/shuoyuan/catkin_slam_ws/src/FAST_LIO_LC/PGO/include/**",
+        "/home/shuoyuan/catkin_slam_ws/src/aprilslamcpp/include/**",
+        "/home/shuoyuan/catkin_slam_ws/src/apriltag_ros/apriltag_ros/include/**",
+        "/home/shuoyuan/catkin_oldslam_ws/src/DAGNN/include/**",
+        "/home/shuoyuan/catkin_slam_ws/src/daslam/include/**",
+        "/home/shuoyuan/catkin_slam_ws/src/driect_lidar_odometry/include/**",
+        "/home/shuoyuan/catkin_dataset_ws/src/fast_gicp/include/**",
+        "/home/shuoyuan/catkin_slam_ws/src/FAST_LIO_LC/FAST-LIO/include/**",
+        "/home/shuoyuan/catkin_slam_ws/src/floam/include/**",
+        "/home/shuoyuan/catkin_dataset_ws/src/hdl_global_localization/include/**",
+        "/home/shuoyuan/catkin_dataset_ws/src/hdl_localization/include/**",
+        "/home/shuoyuan/catkin_slam_ws/src/LIO-SAM/include/**",
+        "/home/shuoyuan/catkin_dataset_ws/src/ndt_omp/include/**",
+        "/home/shuoyuan/catkin_slam_ws/src/point_cloud_projection/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
