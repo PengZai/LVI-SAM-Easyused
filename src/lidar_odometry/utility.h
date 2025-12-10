@@ -203,10 +203,20 @@ public:
         //? mod: 修改外参读取方式
         nh.param<vector<double>>(PROJECT_NAME+ "/extrinsicTranslation", t_imu_lidar_V, vector<double>());
         nh.param<vector<double>>(PROJECT_NAME+ "/extrinsicRotation", R_imu_lidar_V, vector<double>());
-        t_imu_lidar = Eigen::Map<const Eigen::Matrix<double, -1, -1, Eigen::RowMajor>>(t_imu_lidar_V.data(), 3, 1);
+	if (t_imu_lidar_V.size() == 3) {
+	    t_imu_lidar = Eigen::Map<const Eigen::Matrix<double, -1, -1, Eigen::RowMajor>>(t_imu_lidar_V.data(), 3, 1);
+	} else {
+	    ROS_ERROR("t_imu_lidar_V size is %lu, expected 3", t_imu_lidar_V.size());
+	    t_imu_lidar = Eigen::Vector3d::Zero();
+	}
         Eigen::Matrix3d R_tmp = Eigen::Map<const Eigen::Matrix<double, -1, -1, Eigen::RowMajor>>(R_imu_lidar_V.data(), 3, 3);
         ROS_ASSERT(abs(R_tmp.determinant()) > 0.9);   // 防止配置文件中写错，这里加一个断言判断一下
-        R_imu_lidar = Eigen::Quaterniond(R_tmp).normalized().toRotationMatrix();
+	if (R_imu_lidar_V.size() == 9) {
+	    R_imu_lidar = Eigen::Map<const Eigen::Matrix<double, -1, -1, Eigen::RowMajor>>(R_imu_lidar_V.data(), 3, 3);
+	} else {
+	    ROS_ERROR("R_imu_lidar_V size is %lu, expected 9", R_imu_lidar_V.size());
+	    R_imu_lidar = Eigen::Matrix3d::Identity();
+	}
         R_lidar_imu = R_imu_lidar.transpose();
 
         //; yaw/pitch/roll的欧拉角绕着哪个轴逆时针旋转，结果为正数。一般来说是绕着+z、+y、+x
