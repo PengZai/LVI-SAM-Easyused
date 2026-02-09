@@ -33,13 +33,15 @@ RUN mkdir build && cd build && cmake -DGTSAM_BUILD_WITH_MARCH_NATIVE=OFF .. && m
 
 WORKDIR /root/catkin_ws
 
+RUN echo "source /opt/ros/melodic/setup.bash" >> /root/.bashrc
+RUN echo "source /root/catkin_ws/devel/setup.bash" >> /root/.bashrc
+
+
 # Load ROS environment at each run
-COPY ./ros_entrypoint.sh /
+COPY ros_entrypoint.sh /ros_entrypoint.sh
 RUN chmod 755 /ros_entrypoint.sh
 ENTRYPOINT ["/ros_entrypoint.sh"]
 
-RUN echo "source /opt/ros/melodic/setup.bash" >> /root/.bashrc
-RUN echo "source /root/catkin_ws/devel/setup.bash" >> /root/.bashrc
 
 
 CMD ["bash"]
